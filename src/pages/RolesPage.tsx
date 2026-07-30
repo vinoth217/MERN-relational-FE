@@ -6,7 +6,7 @@ export function RolesPage() {
       <section className="space-y-2">
         <h1 className="text-3xl font-semibold tracking-tight">Roles</h1>
         <p className="text-muted-foreground">
-          Review hierarchical roles used for access control.
+          Manage roles and their permissions from the database.
         </p>
       </section>
       <RolesPanel />

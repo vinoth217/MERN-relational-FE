@@ -45,19 +45,19 @@ export function DashboardPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Organization</CardTitle>
-            <CardDescription>Current workspace context</CardDescription>
+            <CardTitle className="text-base">Project</CardTitle>
+            <CardDescription>Assigned project context</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2 text-sm">
             <div className="flex justify-between gap-4">
               <span className="text-muted-foreground">Name</span>
-              <span className="font-medium">
-                {user?.organizationName ?? "—"}
-              </span>
+              <span className="font-medium">{user?.projectName ?? "—"}</span>
             </div>
             <div className="flex justify-between gap-4">
-              <span className="text-muted-foreground">Org ID</span>
-              <span className="font-medium">{user?.organizationId ?? "—"}</span>
+              <span className="text-muted-foreground">Organization</span>
+              <span className="font-medium">
+                {user?.organizationName ?? "ProjectFlow HQ"}
+              </span>
             </div>
           </CardContent>
         </Card>
@@ -69,9 +69,9 @@ export function DashboardPage() {
           </CardHeader>
           <CardContent>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Dashboard</li>
-              <li>Users and Roles → Users</li>
-              <li>Users and Roles → Roles</li>
+              <li>Projects — status & task counts</li>
+              <li>Users — create / edit assignment</li>
+              <li>Roles — permissions</li>
             </ul>
           </CardContent>
         </Card>

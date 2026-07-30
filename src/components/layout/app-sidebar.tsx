@@ -1,13 +1,17 @@
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   ChevronDown,
+  FolderKanban,
+  GitBranch,
   LayoutDashboard,
+  ListTodo,
   Shield,
   Users,
   UsersRound,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAppSelector } from "@/store/hooks";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   cn(
@@ -19,7 +23,8 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
 
 export function AppSidebar() {
   const location = useLocation();
-  const navigate = useNavigate();
+  const role = useAppSelector((state) => state.auth.user?.role);
+  const isAdmin = role === "ADMIN";
   const isUsersRolesSection =
     location.pathname.startsWith("/users") ||
     location.pathname.startsWith("/roles");
@@ -49,32 +54,37 @@ export function AppSidebar() {
           Dashboard
         </NavLink>
 
-        <div className="pt-2">
-          <div
-            className={cn(
-              "flex w-full items-center rounded-lg transition-colors",
-              isUsersRolesSection
-                ? "bg-sidebar-accent/50 text-sidebar-accent-foreground"
-                : "text-sidebar-foreground/80 hover:bg-sidebar-accent/70 hover:text-sidebar-accent-foreground",
-            )}
-          >
+        <NavLink to="/projects" className={navLinkClass}>
+          <FolderKanban className="size-4" />
+          Projects
+        </NavLink>
+
+        <NavLink to="/tasks" className={navLinkClass}>
+          <ListTodo className="size-4" />
+          Tasks
+        </NavLink>
+
+        <NavLink to="/hierarchy" className={navLinkClass}>
+          <GitBranch className="size-4" />
+          Role Hierarchy
+        </NavLink>
+
+        {isAdmin ? (
+          <div className="pt-2">
             <button
               type="button"
-              onClick={() => {
-                setUsersRolesOpen(true);
-                navigate("/users-roles");
-              }}
-              className="flex flex-1 items-center gap-2 px-3 py-2 text-left text-sm font-medium"
-            >
-              <UsersRound className="size-4" />
-              Users and Roles
-            </button>
-            <button
-              type="button"
-              aria-label="Toggle Users and Roles submenu"
               onClick={() => setUsersRolesOpen((open) => !open)}
-              className="px-2 py-2"
+              className={cn(
+                "flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                isUsersRolesSection || usersRolesOpen
+                  ? "bg-sidebar-accent/50 text-sidebar-accent-foreground"
+                  : "text-sidebar-foreground/80 hover:bg-sidebar-accent/70 hover:text-sidebar-accent-foreground",
+              )}
             >
+              <span className="flex items-center gap-2">
+                <UsersRound className="size-4" />
+                Users and Roles
+              </span>
               <ChevronDown
                 className={cn(
                   "size-4 transition-transform",
@@ -82,21 +92,21 @@ export function AppSidebar() {
                 )}
               />
             </button>
-          </div>
 
-          {usersRolesOpen ? (
-            <div className="mt-1 ml-4 space-y-1 border-l border-sidebar-border pl-2">
-              <NavLink to="/users" className={navLinkClass}>
-                <Users className="size-4" />
-                Users
-              </NavLink>
-              <NavLink to="/roles" className={navLinkClass}>
-                <Shield className="size-4" />
-                Roles
-              </NavLink>
-            </div>
-          ) : null}
-        </div>
+            {usersRolesOpen ? (
+              <div className="mt-1 ml-4 space-y-1 border-l border-sidebar-border pl-2">
+                <NavLink to="/users" className={navLinkClass}>
+                  <Users className="size-4" />
+                  Users
+                </NavLink>
+                <NavLink to="/roles" className={navLinkClass}>
+                  <Shield className="size-4" />
+                  Roles
+                </NavLink>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
       </nav>
     </aside>
   );

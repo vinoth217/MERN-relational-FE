@@ -7,6 +7,8 @@ export interface User {
   role: UserRole;
   organizationId?: string;
   organizationName?: string;
+  projectId?: string;
+  projectName?: string;
 }
 
 export interface AuthSession {
@@ -17,4 +19,17 @@ export interface AuthSession {
 export interface LoginCredentials {
   email: string;
   password: string;
+}
+
+export interface CreateUserInput {
+  name: string;
+  email: string;
+  password: string;
+  role: UserRole;
+  projectId: string;
+}
+
+export interface UpdateUserInput {
+  name: string;
+  projectId: string;
 }

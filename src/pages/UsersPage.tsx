@@ -6,7 +6,7 @@ export function UsersPage() {
       <section className="space-y-2">
         <h1 className="text-3xl font-semibold tracking-tight">Users</h1>
         <p className="text-muted-foreground">
-          Manage organization users from this module.
+          Manage users and assign them to projects.
         </p>
       </section>
       <UsersPanel />

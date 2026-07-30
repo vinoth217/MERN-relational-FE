@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import { LogOut } from "lucide-react";
 import { toast } from "sonner";
 
@@ -10,10 +11,12 @@ import { logout } from "@/store/slices/authSlice";
 export function LogoutButton() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
 
   const handleLogout = async () => {
     await logoutRequest();
     dispatch(logout());
+    queryClient.clear();
     toast.success("Signed out successfully");
     navigate("/login", { replace: true });
   };
